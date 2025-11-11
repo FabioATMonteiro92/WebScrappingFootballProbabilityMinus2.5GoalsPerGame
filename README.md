@@ -1,4 +1,4 @@
-[![Launch Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/FabioATMonteiro92/WebScrappingFootballProbabilityMinus2.5GoalsPerGame/HEAD?labpath=OVG_v2_Minus2_5Goals.ipynb)
+[![Launch Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/FabioATMonteiro92/WebScrappingFootballProbabilityOver2.5GoalsPerGame/HEAD?filepath=OVG_v2_Minus2_5Goals.ipynb)
 
 # Web Scraping & Probabilistic Modeling of Over 2.5 Goals in Football Matches
 
