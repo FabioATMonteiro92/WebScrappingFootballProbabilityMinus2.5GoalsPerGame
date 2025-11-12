@@ -14,15 +14,15 @@ The output is delivered as Excel workbooks (full data and treated data) designed
 ---
 
 ## What this project does
-- Scrapes over/under performance tables (Total, Last 8, Home, Away) and parses results/fixtures per league.  
+- Scrapes performance tables (Total, Last 8, Home, Away) and parses results/fixtures per league.  
 - Builds team-level profiles of goals scored and conceded based on:
   - all fixtures played so far, last 8 matches, home games, and away games.  
   - mean and standard deviation (goals scored (GS)/goals conceded (GC)).
 - Derives match probabilities for games finishing with over 2.5 goals using:
-  - low average bounds from team O/U percentages.  
+  - low average bounds based on the previous number of games that finished over 2.5 goals.  
   - home/away over 2.5 goals tendencies.  
   - GS/GC means and SDs combined (worst- and best-case expectations).  
-- Ranks upcoming matches using a multi-criteria sort (low-bound prob, average home/away prob, sums of GS/GC means & SDs, GP).  
+- Ranks upcoming matches using a multi-criteria sort (low-bound prob, average home/away prob, sums of GS/GC means & SDs, games played).  
 - Exports tidy, analysis-ready Excel files (full + treated).
 
 ---
@@ -34,8 +34,8 @@ The pipeline creates two Excel workbooks:
 **Filename:** `FullDatabase+2.5Goals_<DD-MM-YYYY>.xlsx`  
 **Sheets:**
 - `OverUnderGoalsTotalFullTime`:
-  – unified table with league
-  - team, games played (GP)
+  – league information
+  - games played (GP)
   - information about next match
   - low and high bound probability of the games finishing with +2.5 goals (based on the proportion of previous home and away matches that each team’s games ended with over 2.5 goals)
   - probability (home and away) based on the proportion of previous matches in which the home team’s home games and the away team’s away games ended with over 2.5 goals
@@ -60,28 +60,22 @@ The pipeline creates two Excel workbooks:
 
 ---
 
-## How it works (pipeline overview)
-### 🔹 League setup
-Two URL lists per league:
-- O/U tables (Total, Last 8, Home, Away)  
-- Results & fixtures (by date)
-
+## How the script works
 ### 🔹 Scraping & parsing
-- Fetch league pages, parse the main table (`id="btable"`), keep O/U rows (ignore “League average”).  
-- From results/fixtures pages, identify rows by a date pattern (e.g., `Mon 4 Nov`), split results vs fixtures.  
+- Fetches league pages from **SoccerStats.com**, parses the main table (`id="btable"`), and keeps O/U rows.  
+- From the results/fixtures pages, identifies rows by a date pattern (e.g., `Mon 4 Nov`), and splits results vs fixtures.  
 
 ### 🔹 Team metrics
-- For each team: collect GS/GC series overall, last 8, home, away.  
-- Compute mean and SD per series; compute goal-distribution proportions (score 0–6).  
+- For each team, the script collects GS/GC series for all fixtures played so far, last 8 matches, home games, and away games.  
+- Compute mean and SD per series.  
 
 ### 🔹 Match enrichment
 - Create “Next match” strings and propagate per-team metrics.  
-- Compute low/high/avg O2.5 bounds and home/away O2.5.  
-- Combine GS/GC means & SDs for quick triage features and expected odd/prob columns.  
+- Compute low and high bound probabilities of games finishing over 2.5 goals.  
+- Combine GS and GC means & SDs.  
 
 ### 🔹 Ranking & export
-- Sort by: low-bound prob → average home/away prob → sum of GS/GC means → sum of SDs → GP.  
-- Deduplicate on “Next match”.  
+- Estimates the best and worst case scenarios and ranks teams according to the highest probability of their matches finishing with over 2.5 goals.    
 - Write Full Data and Treated Data workbooks.
 
 ---
