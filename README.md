@@ -49,8 +49,14 @@ The pipeline creates two Excel workbooks:
 **Sheet:**
 - `TreatedData` – filtered view with:
   - GP ≥ 12  
-  - low-bound home/away O2.5 ≥ 50 (threshold configurable in code).    
-  - worst/best expected score aggregations and a CaseEvaluation tag: *Both Cases Ok*, *Best Case Scenario Ok*, or *No Case Ok*.
+  - low-bound home/away O2.5 ≥ 50.    
+  - Defines the best and worst case scenarios for a match finishing with over 2.5 goals:
+    - Worst-case scenario:
+      - Home team’s expected goals = the lower value between their average goals scored at home and the average goals conceded by the away team.
+      - Away team’s expected goals = the lower value between their average goals scored away and the average goals conceded by the home team.
+    - Best-case scenario:
+      - Home team’s expected goals = the higher value between their average goals scored at home and the average goals conceded by the away team.
+      - Away team’s expected goals = the higher value between their average goals scored away and the average goals conceded by the home team.
 
 ---
 
