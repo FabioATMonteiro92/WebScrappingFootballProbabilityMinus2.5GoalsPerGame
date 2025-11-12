@@ -14,7 +14,7 @@ The output is delivered as Excel workbooks (full data and treated data) designed
 ---
 
 ## What this project does
-- Scrapes performance tables (Total, Last 8, Home, Away) and parses results/fixtures per league.  
+- Scrapes performance tables (total number of games, last 8, home, away) and parses results/fixtures per league.  
 - Builds team-level profiles of goals scored and conceded based on:
   - all fixtures played so far, last 8 matches, home games, and away games.  
   - mean and standard deviation (goals scored (GS)/goals conceded (GC)).
